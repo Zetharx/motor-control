@@ -6,8 +6,8 @@
 *       r30 - Duty Cycle
 *       r31 - RPM
 *
-$INCLUDE        "mpc555regs.inc"
-$INCLUDE        "mpc555setup.inc"
+$INCLUDE        "includes/mpc555regs.inc"
+$INCLUDE        "includes/mpc555setup.inc"
 
 DEFFRQ  equ     5000t           ;default frequency is 5kHz
 DEFDC   equ     50t             ;default duty cycle is 50%
@@ -389,7 +389,7 @@ TPU0ON  bsf
         blr
 
 IPWM0   bsf
-	bl	TPU0OFF
+        bl      TPU0OFF
 
         ldreg   r4,TPUMCR_A     ;TPUMCR register
         lhz     r0,$12(r4)      ;get CFSR3 register
@@ -417,6 +417,14 @@ IPWM0   bsf
         sth     r0,0(r5)        ;Store Update in HSRR1
         csf
         blr
+
+;;;;aubrey added
+
+RAMP    ;compare current and set duty
+        ;if same, leave RAMP
+        ;if different, move 5 (or less) toward set value
+        ;either "wait" and b RAMP or this is called by pit
+
 
 CMDA    ds      $20
 

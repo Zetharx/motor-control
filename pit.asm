@@ -89,14 +89,14 @@ PITINIT ldreg   r20,SCCR
         lhz     r0,0(r20)
         ori     r0,r0,$0080            ;negate PS
         sth     r0,0(r20)
-        
+
         mfmsr   r0
         ori     r0,r0,$8002
         mtmsr   r0              	;set EE
 
         blr
-        
-        
+
+
         ldreg   r8,$2FC240       ;PISCR addr
          ldreg   r11,$aaaa        ;7a11----Interrupt every 2 seconds
          sth     r11,4(r8)        ;load PITC
