@@ -2,8 +2,8 @@ RAM     equ     $003fa200       ;Start of SRAM
 STACK   equ     $003fffff       ;End of SRAM on MPC555
 GLOBAL  equ     $003ff000       ;Global Memory - Data
 
-$INCLUDE "mpc555regs.inc"
-$INCLUDE "mpc555setup.inc"
+$INCLUDE "includes/mpc555regs.inc"
+$INCLUDE "includes/mpc555setup.inc"
 
 $macro  ldreg
         li   %1,0

@@ -313,7 +313,7 @@ RTOA    DIVW    r6,r4,r5        ;RPM10
         mr      r4,r30          ;grab DC
 DTOA    DIVW    r6,r4,r5        ;PWM/10
         mullw   r6,r6,r5        ;quotient*10
-        subf    r6,r6,r4        ;r5=remainder
+        subf    r6,r6,r4        ;r5=remainder  ***is first arg supposed to be r5?
         DIVW    r4,r4,r5        ;
         addi    r6,r6,48t       ;ASCII representation of integer
         stbu    r6,-1(r3)
@@ -418,13 +418,28 @@ IPWM0   bsf
         csf
         blr
 
-;;;;aubrey added
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;aubrey added
+;   r25 is the new set DC --- change this to whatever it should be
+;   r20 holds the gap between
+;   --- possible to manipulate in NOT r30 and then push to r30 for final write
 
-RAMP    ;compare current and set duty
-        ;if same, leave RAMP
-        ;if different, move 5 (or less) toward set value
-        ;either "wait" and b RAMP or this is called by pit
+RAMP    sub     r20,r30,r25     ;compare current and set duty
+        beqlr   0               ;if same, leave RAMP
+        bgt     0,RAMP1         ;if ramping up, move to the add script
+        subi    r30,r30,5       ;run subtract script
+        cmpw    r30,r25         ;
+        bge     0,RAMP2         ;if 5 was good, leave
+        sub     r30,r30,r20     ;if 5 was too much, just sub total diff
+        b       RAMP2           ;
+RAMP1   sub     r20,r25,30      ;we are ramping up so get the positive difference
+        addi    r30,r30,5       ;run addition script
+        cmpw    r30,r25         ;
+        ble     0,RAMP2         ;if 5 was good, leave
+        add     r30,r30,r20     ;if 5 was too much, add the total diff
+RAMP2   ????                    ;either "wait" and b RAMP or this is called by pit
 
+        
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;aubrey added END
 
 CMDA    ds      $20
 

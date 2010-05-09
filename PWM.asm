@@ -2,8 +2,8 @@
 *       MISL Motor Controller
 *       Author: Stephen Peck
 *
-$INCLUDE        "mpc555regs.inc"
-$INCLUDE        "mpc555setup.inc"
+$INCLUDE        "includes/mpc555regs.inc"
+$INCLUDE        "includes/mpc555setup.inc"
 
 *
 *       Memory Map Setup
