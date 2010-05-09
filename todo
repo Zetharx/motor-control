@@ -1,3 +1,3 @@
---create a subroutine for ascii conversion and store to CMDA (perhaps automatically reads and outputs it if we don't already have a routine for that)
+--create a *GENERAL* subroutine for ascii conversion of any number we need at any time which stores to CMDA (perhaps automatically reads and outputs it if we don't already have a routine for that)
 --check RPM calc
 --check ramp code (need stephen's help for which reg is what)
